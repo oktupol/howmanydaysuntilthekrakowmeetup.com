@@ -1,32 +1,24 @@
 import './assets/scss/style.scss';
+import Constants from './assets/js/constants.js';
+import getMeetupState from './assets/js/meetup.js';
 
 function setCounter() {
-    let counterElem = document.getElementById('counter'),
-        currentDate = new Date(),
-        meetupDate = new Date('Oct 30 2019 15:00:00 +0100'),
-        meetupEndDate = new Date('Nov 3 2019 12:00:00 +0100');
+    let counterElem = document.getElementById('counter');
+    let meetup = getMeetupState(new Date(), Constants.MEETUP_START_DATE, Constants.MEETUP_END_DATE);
 
-    // difference in days
-    let difference = (meetupDate - currentDate) / 3600000 / 24,
-        roundedDifference = Math.round(difference),
-        plural = roundedDifference !== 1;
-
-    let hasMeetupStarted = difference <= 0;
-    let isMeetupOver = meetupEndDate - currentDate < 0;
-
-    if (!isMeetupOver && !hasMeetupStarted) {
-        if (roundedDifference !== 0) {
+    if (!meetup.started && !meetup.ended) {
+        if (meetup.days !== 0) {
             counterElem.innerHTML = [
                 'Only',
-                roundedDifference,
+                meetup.days,
                 'more',
-                plural ? 'days' : 'day',
+                meetup.days === 1 ? 'day' : 'days',
                 'until the Krakow meetup!'
             ].join(' ');
         } else {
             counterElem.innerHTML = 'Less than a day until the Krakow meetup!';
         }
-    } else if (hasMeetupStarted && !isMeetupOver) {
+    } else if (!meetup.ended) {
         counterElem.innerHTML = 'The meetup is going on right now!';
     } else {
         counterElem.innerHTML = 'The meetup is over :(';
@@ -36,5 +28,4 @@ function setCounter() {
 
 // Initialize once
 setCounter();
-// Refresh every minute
-setInterval(setCounter, 60000);
+setInterval(setCounter, Constants.REFRESH_INTERVAL);
