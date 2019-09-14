@@ -6,7 +6,7 @@
  * @param {Date} meetupEndDate 
  * @return {{days: Number, started: boolean, ended: boolean}}
  */
-export default function getMeetupState(today, meetupStartDate, meetupEndDate) {
+export function getMeetupState(today, meetupStartDate, meetupEndDate) {
     let differenceUntilStart = (meetupStartDate - today) / 3600000 / 24,
         roundedDifferenceUntilStart = Math.round(differenceUntilStart),
         differenceUntilEnd = meetupEndDate - today;
