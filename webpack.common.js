@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -9,7 +10,22 @@ module.exports = {
             minify: {
                 collapseWhitespace: true,
             }
-        })
+        }),
+        new FaviconsWebpackPlugin({
+            logo: './src/assets/img/favicon.svg',
+            favicons: {
+                icons: {
+                    android: false,
+                    appleIcon: false,
+                    appleStartup: false,
+                    coast: false,
+                    favicons: true,
+                    firefox: false,
+                    windows: false,
+                    yandex: false,
+                }
+            }
+        }),
     ],
     output: {
         filename: '[name].[hash].bundle.js',
