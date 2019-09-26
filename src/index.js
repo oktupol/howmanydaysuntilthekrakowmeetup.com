@@ -2,7 +2,7 @@ import './assets/scss/style.scss';
 import { Constants } from './assets/js/constants';
 import { refreshCountdown } from './assets/js/countdown';
 
-let countdownElement = document.getElementById('countdown');
+let countdownElement = document.getElementsByTagName('h1')[0];
 
 // Initialize once
 refreshCountdown(countdownElement);
